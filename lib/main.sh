@@ -1,10 +1,10 @@
 #! /bin/sh
 
-. ./repo.sh
-. ./head.sh
-. ./workspace.sh
-. ./index.sh
-. ./upstream.sh
+. "${GBG_DIR}/lib/repo.sh"
+. "${GBG_DIR}/lib/head.sh"
+. "${GBG_DIR}/lib/workspace.sh"
+. "${GBG_DIR}/lib/index.sh"
+. "${GBG_DIR}/lib/upstream.sh"
 
 gbg_git_info() {
 
@@ -21,3 +21,4 @@ gbg_git_info() {
   _gbg_get_upstream_status
 }
 
+export gbg_git_info

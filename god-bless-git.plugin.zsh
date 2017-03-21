@@ -1,3 +1,4 @@
 #! /usr/bin/env zsh
 
-source ${0:A:h}/lib/main.sh
+export GBG_DIR="${0:A:h}"
+source ${GBG_DIR}/lib/main.sh

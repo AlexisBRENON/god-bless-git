@@ -1,5 +1,7 @@
 #! /bin/sh
 
+# TODO: handle renamed/moved files
+
 _gbg_get_index_status() {
   git_status="$(git status --porcelain 2> /dev/null)"
   gbg_index_modifications_num=$(echo "${git_status}" | grep -Ece '^M')
@@ -18,4 +20,3 @@ _gbg_get_index_status() {
   export gbg_index_additions_num
   export gbg_index_has_additions
 }
-
