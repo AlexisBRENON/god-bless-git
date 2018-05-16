@@ -1,9 +1,12 @@
 #! /bin/sh
 
 _gbg_get_workspace_status() {
-  [ "${_gbg_list_untracked:-""}" = true ] && _gbg_ignored="--ignore" || _gbg_ignored=""
-  git_status="$(git status --porcelain "${_gbg_ignored}" 2> /dev/null)"
-  unset _gbg_ignored
+  git_status=""
+  if [ "${_gbg_list_untracked:-""}" = true ]; then
+    git_status="$(git status --porcelain --ignored 2> /dev/null)"
+  else
+    git_status="$(git status --porcelain 2> /dev/null)"
+  fi
 
   gbg_workspace_modifications_num=$(echo "${git_status}" | grep -Ece '^.M')
   gbg_workspace_has_modifications=$( [ "${gbg_workspace_modifications_num}" -gt 0 ] && echo "true" || echo "false" )
