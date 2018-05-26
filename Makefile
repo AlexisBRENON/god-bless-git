@@ -1,5 +1,5 @@
 
-TESTS := $(wildcard tests/*.sh)
+TESTS := $(wildcard tests/test_*.sh)
 
 tests: $(TESTS)
 
