@@ -20,17 +20,33 @@ test_nulls_in_non_repo() {
     _make_it_non_repo
     gbg_git_info
 
-    assertEquals 1 "$(set | grep -c '^gbg_repo_git_dir=')"
-    assertEquals "" "${gbg_repo_git_dir:-}"
+    assertEquals \
+        "git_dir undefined" \
+        1 "$(set | grep -c '^gbg_repo_git_dir=')"
+    assertEquals \
+        "git_dir" \
+        "" "${gbg_repo_git_dir:-}"
 
-    assertEquals 1 "$(set | grep -c '^gbg_repo_top_level=')"
-    assertEquals "" "${gbg_repo_top_level:-}"
+    assertEquals \
+        "top_level undefined" \
+        1 "$(set | grep -c '^gbg_repo_top_level=')"
+    assertEquals \
+        "top_level" \
+        "" "${gbg_repo_top_level:-}"
 
-    assertEquals 1 "$(set | grep -c '^gbg_repo_just_init=')"
-    assertEquals "" "${gbg_repo_just_init:-}"
+    assertEquals \
+        "just_init undefined" \
+        1 "$(set | grep -c '^gbg_repo_just_init=')"
+    assertEquals \
+        "just_init" \
+        "" "${gbg_repo_just_init:-}"
 
-    assertEquals 1 "$(set | grep -c '^gbg_repo_has_stashes=')"
-    assertEquals "" "${gbg_repo_has_stashes:-}"
+    assertEquals \
+        "has_stashes undefined" \
+        1 "$(set | grep -c '^gbg_repo_has_stashes=')"
+    assertEquals \
+        "has_stashes" \
+        "" "${gbg_repo_has_stashes:-}"
 }
 
 test_git_dir_at_root() {
