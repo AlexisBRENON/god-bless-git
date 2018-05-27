@@ -14,20 +14,12 @@
 gbg_git_info() {
 
     # Check that gbg is not disabled
-    enabled="$(git config --get gbg.enabled)"
-    disabled="$(git config --get gpg.disabled)"
-    if [ "${enabled}" = "false" ] || \
-        [ "${disabled}" = "true" ]; then
+    lgbg_enabled="$(git config --get gbg.enabled)"
+    lgbg_disabled="$(git config --get gpg.disabled)"
+    if [ "${lgbg_enabled}" = "false" ] || \
+        [ "${lgbg_disabled}" = "true" ]; then
         # Unset previously defined gbg variables
-        gbg_variables="$(\
-            set | \
-            grep -E '^gbg_.*=' | \
-            grep -F -v 'gbg_git_info' | \
-            cut -d'=' -f1)"
-        for variable in ${gbg_variables}; do
-            eval "unset" "${variable}"
-        done
-        unset gbg_variables
+        _gbg_clean_variables
     else
         _gbg_get_repo_status
         _gbg_get_head_status
@@ -35,8 +27,29 @@ gbg_git_info() {
         _gbg_get_index_status
         _gbg_get_upstream_status
     fi
-    unset enabled
-    unset disabled
+
+    _gbg_clean_local_variables
+}
+
+_gbg_clean_local_variables() {
+    gbg_local_variables="$(\
+        set | \
+        grep -E '^lgbg_.*=' | \
+        cut -d'=' -f1 | \
+        tr '\n' ' ')"
+    eval "unset" "${gbg_local_variables}"
+    unset gbg_local_variables
+}
+
+_gbg_clean_variables() {
+    gbg_variables="$(\
+        set | \
+        grep -E '^gbg_.*=' | \
+        grep -F -v 'gbg_git_info' | \
+        cut -d'=' -f1 | \
+        tr '\n' ' ')"
+    eval "unset" "${gbg_variables}"
+    unset gbg_variables
 }
 
 export gbg_git_info
