@@ -3,6 +3,12 @@
 # HELPER FUNCTIONS
 
 _git() {
+    echo "" | \
+        tee -a "${SHUNIT_CMDERRFILE}" "${SHUNIT_CMDOUTFILE}" \
+        > /dev/null
+    echo "git $*" | \
+        tee -a "${SHUNIT_CMDERRFILE}" "${SHUNIT_CMDOUTFILE}" \
+        > /dev/null
     git "$@" >> "${SHUNIT_CMDOUTFILE}" 2>> "${SHUNIT_CMDERRFILE}"
 }
 
@@ -21,8 +27,9 @@ _make_commits() {
     branch_name="${2:-}"
     num_commited=1
     while [ "${num_commited}" -le "${num_commits}" ]; do
-        echo "${branch_name}:c${num_commited}" >> f1
-        _git add f1
+        echo "${branch_name}:c${num_commited}" \
+            >> "${branch_name}_f${num_commited}"
+        _git add "${branch_name}_f${num_commited}"
         _git commit -m "${branch_name}:c${num_commited}"
         if [ "${num_commited}" -eq 1 ]; then
             _git tag "${branch_name}_init"
@@ -32,6 +39,12 @@ _make_commits() {
 }
 
 _make_history() {
+    # Build a complete git history given numbers of commit
+    # n commits are added to the master branch according to $1 (or 1)
+    # Then commits are added to branches b1, b2, etc. according to
+    # following arguments, forked from first commit of master.
+    # A tag <branch_name>_init is added of the first commit of each branch.
+    # This finally checkout master branch
     _make_commits "$1" "master"
     shift
 

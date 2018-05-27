@@ -97,7 +97,7 @@ test_not_has_stash_after_commit() {
 
 test_has_stash() {
     _make_one_commit
-    echo "f1.2" >> f1
+    echo "f1.2" >> master_f1
     git stash >> "${SHUNIT_CMDOUTFILE}"
     gbg_git_info
     assertEquals "true" "${gbg_repo_has_stashes:-}"
@@ -110,11 +110,11 @@ test_0_stashes_num_if_not_has_stash() {
 
 test_num_stashes() {
     _make_one_commit
-    echo "f1.2" >> f1
+    echo "f1.2" >> master_f1
     git stash >> "${SHUNIT_CMDOUTFILE}"
     gbg_git_info
     assertEquals 1 "${gbg_repo_stashes_num:-}"
-    echo "f1.3" >> f1
+    echo "f1.3" >> master_f1
     git stash >> "${SHUNIT_CMDOUTFILE}"
     gbg_git_info
     assertEquals 2 "${gbg_repo_stashes_num:-}"
