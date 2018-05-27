@@ -10,3 +10,8 @@ $(TESTS): tests/shunit2
 tests/shunit2:
 	git clone https://github.com/kward/shunit2.git tests/shunit2
 
+lint:
+	find . -name '*.sh' ! -path './tests/shunit2/*' -print0 | \
+		xargs -0 shellcheck -x
+	find . -name '*.sh' ! -path './tests/shunit2/*' -print0 | \
+		xargs -0 bashate
