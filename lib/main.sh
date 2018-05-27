@@ -14,16 +14,29 @@
 gbg_git_info() {
 
     # Check that gbg is not disabled
-    enabled=$(git config --get gbg.enabled)
-    if [ "${enabled}" = "false" ]; then
-        exit 1;
+    enabled="$(git config --get gbg.enabled)"
+    disabled="$(git config --get gpg.disabled)"
+    if [ "${enabled}" = "false" ] || \
+        [ "${disabled}" = "true" ]; then
+        # Unset previously defined gbg variables
+        gbg_variables="$(\
+            set | \
+            grep -E '^gbg_.*=' | \
+            grep -F -v 'gbg_git_info' | \
+            cut -d'=' -f1)"
+        for variable in ${gbg_variables}; do
+            eval "unset" "${variable}"
+        done
+        unset gbg_variables
+    else
+        _gbg_get_repo_status
+        _gbg_get_head_status
+        _gbg_get_workspace_status
+        _gbg_get_index_status
+        _gbg_get_upstream_status
     fi
-
-    _gbg_get_repo_status
-    _gbg_get_head_status
-    _gbg_get_workspace_status
-    _gbg_get_index_status
-    _gbg_get_upstream_status
+    unset enabled
+    unset disabled
 }
 
 export gbg_git_info
