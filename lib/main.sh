@@ -34,7 +34,7 @@ gbg_git_info() {
 _gbg_clean_local_variables() {
     gbg_local_variables="$(\
         set | \
-        grep -E '^lgbg_.*=' | \
+        grep -a -E '^lgbg_.*=' | \
         cut -d'=' -f1 | \
         tr '\n' ' ')"
     eval "unset" "${gbg_local_variables}"
@@ -44,8 +44,8 @@ _gbg_clean_local_variables() {
 _gbg_clean_variables() {
     gbg_variables="$(\
         set | \
-        grep -E '^gbg_.*=' | \
-        grep -F -v 'gbg_git_info' | \
+        grep -a -E '^gbg_.*=' | \
+        grep -a -F -v 'gbg_git_info' | \
         cut -d'=' -f1 | \
         tr '\n' ' ')"
     eval "unset" "${gbg_variables}"
