@@ -67,3 +67,10 @@ _make_one_commit() {
     _make_history 1
 }
 
+_make_upstream() {
+    mkdir remote
+    _git init --bare remote
+    _git remote add origin ./remote
+    _git push --all -u origin
+}
+
