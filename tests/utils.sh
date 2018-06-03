@@ -38,6 +38,20 @@ _make_commits() {
     done
 }
 
+_make_stashes() {
+    num_todo="${1:-1}"
+    branch_name="${2:-}"
+    num_done=1
+    while [ "${num_done}" -le "${num_todo}" ]; do
+        echo "${branch_name}:s${num_commited}" \
+            >> "${branch_name}_f${num_commited}"
+        _git stash push \
+            -m "${branch_name}_f${num_commited}"
+        num_done=$(( num_done + 1 ))
+    done
+}
+
+
 _make_history() {
     # Build a complete git history given numbers of commit
     # n commits are added to the master branch according to $1 (or 1)
