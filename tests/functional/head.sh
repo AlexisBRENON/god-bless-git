@@ -1,7 +1,7 @@
 #! /usr/bin/env sh
 
-. ./tests/setups.sh
-. ./tests/utils.sh
+. "${GBG_DIR}/tests/util/setups.sh"
+. "${GBG_DIR}/tests/util/utils.sh"
 
 test_nulls_in_non_repo() {
     _make_it_non_repo
@@ -116,5 +116,5 @@ test_head_detached_after_checkout() {
     assertEquals "true" "${gbg_head_is_detached}"
 }
 
-. ./tests/shunit2/shunit2
+. "${GBG_DIR}/tests/shunit2/shunit2"
 

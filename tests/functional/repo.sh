@@ -2,8 +2,8 @@
 
 # Test repo related informations
 
-. ./tests/setups.sh
-. ./tests/utils.sh
+. "${GBG_DIR}/tests/util/setups.sh"
+. "${GBG_DIR}/tests/util/utils.sh"
 
 test_is_a_git_repo() {
     gbg_git_info
@@ -123,5 +123,5 @@ test_num_stashes() {
     assertEquals 1 "${gbg_repo_stashes_num:-}"
 }
 
-. ./tests/shunit2/shunit2
+. "${GBG_DIR}/tests/shunit2/shunit2"
 

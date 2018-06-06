@@ -1,7 +1,7 @@
 #! /usr/sh
 
-. ./tests/setups.sh
-. ./tests/utils.sh
+. "${GBG_DIR}/tests/util/setups.sh"
+. "${GBG_DIR}/tests/util/utils.sh"
 
 _setup_profiling() {
     echo "${PROFILE_DIR}"
@@ -152,4 +152,4 @@ test_long_profile_heavy_repo() {
             bc)"
 }
 
-. ./tests/shunit2/shunit2
+. "${GBG_DIR}/tests/shunit2/shunit2"

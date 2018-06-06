@@ -1,7 +1,7 @@
 #! /usr/bin/env sh
 
-. ./tests/setups.sh
-. ./tests/utils.sh
+. "${GBG_DIR}/tests/util/setups.sh"
+. "${GBG_DIR}/tests/util/utils.sh"
 
 test_nulls_in_non_repo() {
     _make_it_non_repo
@@ -9,25 +9,25 @@ test_nulls_in_non_repo() {
 
     assertNull \
         "has_upstream" \
-        "${gbg_upstream_has_upstream}"
+        "${gbg_upstream_has_upstream:-}"
     assertNull \
         "upstream_name" \
-        "${gbg_upstream_name}"
+        "${gbg_upstream_name:-}"
     assertNull \
         "upstream_commits_ahead_num" \
-        "${gbg_upstream_commits_ahead_num}"
+        "${gbg_upstream_commits_ahead_num:-}"
     assertNull \
         "gbg_upstream_has_commits_ahead" \
-        "${gbg_upstream_has_commits_ahead}"
+        "${gbg_upstream_has_commits_ahead:-}"
     assertNull \
         "gbg_upstream_commits_behind_num" \
-        "${gbg_upstream_commits_behind_num}"
+        "${gbg_upstream_commits_behind_num:-}"
     assertNull \
         "gbg_upstream_has_commits_behind" \
-        "${gbg_upstream_has_commits_behind}"
+        "${gbg_upstream_has_commits_behind:-}"
     assertNull \
         "gbg_upstream_has_diverged" \
-        "${gbg_upstream_has_diverged}"
+        "${gbg_upstream_has_diverged:-}"
 }
 
 test_not_has_upstream() {
@@ -144,5 +144,5 @@ test_commits_diverged() {
     assertEquals "true" "${gbg_upstream_has_diverged}"
 }
 
-. ./tests/shunit2/shunit2
+. "${GBG_DIR}/tests/shunit2/shunit2"
 

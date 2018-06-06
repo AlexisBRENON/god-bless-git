@@ -1,7 +1,7 @@
 #! /usr/bin/env sh
 
-. ./tests/setups.sh
-. ./tests/utils.sh
+. "${GBG_DIR}/tests/util/setups.sh"
+. "${GBG_DIR}/tests/util/utils.sh"
 
 test_gbg_when_unspecified() {
     gbg_git_info
@@ -42,5 +42,5 @@ test_gbg_reset_when_not_enabled() {
         1 "${num_gbg_variables}"
 }
 
-. ./tests/shunit2/shunit2
+. "${GBG_DIR}/tests/shunit2/shunit2"
 

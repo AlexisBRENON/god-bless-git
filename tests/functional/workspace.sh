@@ -1,35 +1,35 @@
 #! /usr/bin/env sh
 
-. ./tests/setups.sh
-. ./tests/utils.sh
+. "${GBG_DIR}/tests/util/setups.sh"
+. "${GBG_DIR}/tests/util/utils.sh"
 
 test_nulls_in_non_repo() {
     _make_it_non_repo
     gbg_git_info
     assertNull \
         "modifications_num" \
-        "${gbg_workspace_modifications_num}"
+        "${gbg_workspace_modifications_num:-}"
     assertNull \
         "has_modifications" \
-        "${gbg_workspace_has_modifications}"
+        "${gbg_workspace_has_modifications:-}"
     assertNull \
         "deletions_num" \
-        "${gbg_workspace_deletions_num}"
+        "${gbg_workspace_deletions_num:-}"
     assertNull \
         "has_deletions" \
-        "${gbg_workspace_has_deletions}"
+        "${gbg_workspace_has_deletions:-}"
     assertNull \
         "untracked_num" \
-        "${gbg_workspace_untracked_num}"
+        "${gbg_workspace_untracked_num:-}"
     assertNull \
         "has_untracked" \
-        "${gbg_workspace_has_untracked}"
+        "${gbg_workspace_has_untracked:-}"
     assertNull \
         "ignored_num" \
-        "${gbg_workspace_ignored_num}"
+        "${gbg_workspace_ignored_num:-}"
     assertNull \
         "has_ignored" \
-        "${gbg_workspace_has_ignored}"
+        "${gbg_workspace_has_ignored:-}"
 }
 
 test_has_no_modifications_and_num() {
@@ -109,5 +109,5 @@ test_has_ignored_and_num() {
     assertEquals 2 "${gbg_workspace_ignored_num}"
 }
 
-. ./tests/shunit2/shunit2
+. "${GBG_DIR}/tests/shunit2/shunit2"
 

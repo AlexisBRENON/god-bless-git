@@ -1,35 +1,35 @@
 #! /usr/bin/env sh
 
-. ./tests/setups.sh
-. ./tests/utils.sh
+. "${GBG_DIR}/tests/util/setups.sh"
+. "${GBG_DIR}/tests/util/utils.sh"
 
 test_nulls_in_non_repo() {
     _make_it_non_repo
     gbg_git_info
     assertNull \
         "modifications_num" \
-        "${gbg_index_modifications_num}"
+        "${gbg_index_modifications_num:-}"
     assertNull \
         "has_modifications" \
-        "${gbg_index_has_modifications}"
+        "${gbg_index_has_modifications:-}"
     assertNull \
         "moves_num" \
-        "${gbg_index_moves_num}"
+        "${gbg_index_moves_num:-}"
     assertNull \
         "has_moves" \
-        "${gbg_index_has_moves}"
+        "${gbg_index_has_moves:-}"
     assertNull \
         "deletions_num" \
-        "${gbg_workspace_deletions_num}"
+        "${gbg_index_deletions_num:-}"
     assertNull \
         "has_deletions" \
-        "${gbg_workspace_has_deletions}"
+        "${gbg_index_has_deletions:-}"
     assertNull \
         "additions_num" \
-        "${gbg_index_additions_num}"
+        "${gbg_index_additions_num:-}"
     assertNull \
         "has_additions" \
-        "${gbg_index_has_additions}"
+        "${gbg_index_has_additions:-}"
 }
 
 test_has_no_modifications_and_num() {
@@ -112,5 +112,5 @@ test_has_additions_and_num() {
     assertEquals 2 "${gbg_index_additions_num}"
 }
 
-. ./tests/shunit2/shunit2
+. "${GBG_DIR}/tests/shunit2/shunit2"
 
