@@ -1,7 +1,6 @@
 #! /usr/sh
 
-. "${GBG_DIR}/tests/util/setups.sh"
-. "${GBG_DIR}/tests/util/utils.sh"
+. "./tests/util/setups.sh"
 
 _setup_profiling() {
     echo "${PROFILE_DIR}"
@@ -83,7 +82,7 @@ _sumup_profile() {
 test_profile_non_repo() {
     _make_it_non_repo
 
-    profiling="$(_profile gbg_git_info)"
+    profiling="$(_profile god_bless_git)"
 
     total_time="$(_total_time "${profiling}")"
     longest_command="$(_longest_command "${profiling}")"
@@ -98,7 +97,7 @@ test_profile_non_repo() {
 }
 
 test_profile_empty_repo() {
-    profiling="$(_profile gbg_git_info)"
+    profiling="$(_profile god_bless_git)"
 
     total_time="$(_total_time "${profiling}")"
     longest_command="$(_longest_command "${profiling}")"
@@ -116,7 +115,7 @@ test_profile_simple_repo() {
     _make_history 30 20 10
     _make_upstream
     _git checkout master~15
-    profiling="$(_profile gbg_git_info)"
+    profiling="$(_profile god_bless_git)"
 
     total_time="$(_total_time "${profiling}")"
     longest_command="$(_longest_command "${profiling}")"
@@ -138,7 +137,7 @@ test_long_profile_heavy_repo() {
         10 10 10 10 10
     _make_upstream
     _make_stashes 10
-    profiling="$(_profile gbg_git_info)"
+    profiling="$(_profile god_bless_git)"
 
     total_time="$(_total_time "${profiling}")"
     longest_command="$(_longest_command "${profiling}")"
@@ -152,4 +151,4 @@ test_long_profile_heavy_repo() {
             bc)"
 }
 
-. "${GBG_DIR}/tests/shunit2/shunit2"
+. "./tests/shunit2/shunit2"

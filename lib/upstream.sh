@@ -1,7 +1,7 @@
 #! /bin/sh
 
 _gbg_get_upstream_status() {
-    if [ "${gbg_is_a_git_repo}" = "true" ]; then
+    if [ "${gbg_is_a_git_repo:-false}" = "true" ]; then
         lgbg_upstream="$(\
             git rev-parse --symbolic-full-name --abbrev-ref "@{upstream}" \
             2> /dev/null)"

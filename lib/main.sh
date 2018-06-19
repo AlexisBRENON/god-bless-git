@@ -11,11 +11,11 @@
 # shellcheck source=./lib/upstream.sh
 . "${GBG_DIR}/lib/upstream.sh"
 
-gbg_git_info() {
+_gbg_git_info() {
 
     # Check that gbg is not disabled
     lgbg_enabled="$(git config --get gbg.enabled)"
-    lgbg_disabled="$(git config --get gpg.disabled)"
+    lgbg_disabled="$(git config --get gbg.disabled)"
     if [ "${lgbg_enabled}" = "false" ] || \
         [ "${lgbg_disabled}" = "true" ]; then
         # Unset previously defined gbg variables
@@ -45,11 +45,9 @@ _gbg_clean_variables() {
     gbg_variables="$(\
         set | \
         grep -a -E '^gbg_.*=' | \
-        grep -a -F -v 'gbg_git_info' | \
         cut -d'=' -f1 | \
         tr '\n' ' ')"
     eval "unset" "${gbg_variables}"
     unset gbg_variables
 }
 
-export gbg_git_info

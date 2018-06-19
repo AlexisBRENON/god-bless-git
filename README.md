@@ -28,9 +28,10 @@ God Bless Git as few prerequisites.
 First one is [git][] which is required.
 You can install it with your distribution package manager (apt, yum, pacman, etc.) or compile it yourself (look [git website][git]).
 
-Then, GBG rely on system utilities as `sed`, `grep`, `cut`, etc.
+Then, GBG rely on POSIX compliant system utilities as `sed`, `grep`, `cut`, etc.
 These should be already install on most of the POSIX systems.
 If not, then you probably have a very custom system and so must be skilled enough to install them.
+**WARNING:** Busybox's version of utilities have weird options/syntax and are very likely to not work properly with GBG.
 
 There is some optional dependencies.
 On the one side, for code linting.
@@ -38,11 +39,11 @@ We rely on [ShellCheck][] and [Bashate][] to warn us about the coding style.
 Just check their respective pages to know how to install them (nothing really complicated).
 On the other side, for testing.
 Here we rely on [shUnit2][].
-However, it is automatically installed the first time you run the tests, and so you do not have to install it manually.
+Hopefully, it is automatically installed the first time you run the tests, and so you do not have to install it manually.
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development environment running
+God Bless Git does not need to be installed.
 
 First, clone the repository:
 
@@ -50,110 +51,9 @@ First, clone the repository:
 git clone https://github.com/AlexisBRENON/god-bless-git.git
 ```
 
-Then, source the init script:
+That's it, GBG is ready to use.
+See [deployment][] to know how to use it in real life.
 
-```sh
-. god-bless-git/init.sh
-```
-
-That's it.
-You know have a `gbg_git_info` function declared which will populate GBG's variables (see [deployment][]) each time you call it.
-
-To see it at work, move to a non git repository folder (like `/tmp`) and run:
-
-```sh
-cd /tmp
-gbg_git_info
-set | grep -aE '^gbg_'
-```
-
-Here is the sample output:
-
-```
-gbg_git_info=''
-gbg_head_branch=''
-gbg_head_hash=''
-gbg_head_is_detached=''
-gbg_head_is_on_tag=''
-gbg_head_tag=''
-gbg_index_additions_num=''
-gbg_index_deletions_num=''
-gbg_index_has_additions=''
-gbg_index_has_deletions=''
-gbg_index_has_modifications=''
-gbg_index_has_moves=''
-gbg_index_modifications_num=''
-gbg_index_moves_num=''
-gbg_is_a_git_repo=false
-gbg_repo_git_dir=''
-gbg_repo_has_stashes=''
-gbg_repo_just_init=''
-gbg_repo_stashes_num=''
-gbg_repo_top_level=''
-gbg_upstream_commits_ahead_num=''
-gbg_upstream_commits_behind_num=''
-gbg_upstream_has_commits_ahead=''
-gbg_upstream_has_commits_behind=''
-gbg_upstream_has_diverged=''
-gbg_upstream_has_upstream=''
-gbg_upstream_name=''
-gbg_workspace_deletions_num=''
-gbg_workspace_has_deletions=''
-gbg_workspace_has_ignored=''
-gbg_workspace_has_modifications=''
-gbg_workspace_has_untracked=''
-gbg_workspace_ignored_num=''
-gbg_workspace_modifications_num=''
-gbg_workspace_untracked_num=''
-```
-
-Then move back to the `god_bless_git` folder and run again the previous commands:
-
-```sh
-cd god_bless_git
-gbg_git_info
-set | grep -aE '^gbg_'
-```
-
-Here again is the sample output (which can be different from yours):
-
-```
-gbg_git_info=''
-gbg_head_branch=master
-gbg_head_hash=5543d924a41f33b045b5317291d3df0e4b76eee0
-gbg_head_is_detached=false
-gbg_head_is_on_tag=false
-gbg_head_tag=''
-gbg_index_additions_num=0
-gbg_index_deletions_num=0
-gbg_index_has_additions=false
-gbg_index_has_deletions=false
-gbg_index_has_modifications=false
-gbg_index_has_moves=false
-gbg_index_modifications_num=0
-gbg_index_moves_num=0
-gbg_is_a_git_repo=true
-gbg_repo_git_dir=/home/jovyan/god-bless-git/.git
-gbg_repo_has_stashes=false
-gbg_repo_just_init=false
-gbg_repo_stashes_num=0
-gbg_repo_top_level=/home/jovyan/god-bless-git
-gbg_upstream_commits_ahead_num=0
-gbg_upstream_commits_behind_num=0
-gbg_upstream_has_commits_ahead=false
-gbg_upstream_has_commits_behind=false
-gbg_upstream_has_diverged=false
-gbg_upstream_has_upstream=true
-gbg_upstream_name=origin/master
-gbg_workspace_deletions_num=0
-gbg_workspace_has_deletions=false
-gbg_workspace_has_ignored=true
-gbg_workspace_has_modifications=false
-gbg_workspace_has_untracked=true
-gbg_workspace_ignored_num=2
-gbg_workspace_modifications_num=0
-gbg_workspace_untracked_num=1
-```
 
 ## Running the tests
 
@@ -195,11 +95,151 @@ make lint
 
 ## <a name="deployment"></a>Deployment
 
-Currently, the only way to deploy GBG is to clone the repository somewhere (like `~/.local/share/gbg`) and add the following line to your shell RC file:
+It exists two ways to use God Bless Git:
+
+ * [Sourcing the script](sourcing)
+ * [Invoking the script](invoking)
+
+### <a name="sourcing"></a>Sourcing
+
+This way of using GBG is probably the best way if you intent to often fetch Git informations.
+It is also the way GBG has been designed.
+
+First, source one of the init script (note the '`.`' at the line start):
 
 ```sh
-. ~/.local/share/gbg/init.sh
+. god-bless-git/god_bless_git.sh
 ```
+
+Or, for ZSH user
+
+```zsh
+. god-bless-git/god_bless_git.plugin.zsh
+```
+
+**Note:** Depending on your shell (in particular, on classical `sh`), init script is not able to determine GBG root directory.
+It is possible to overcome this providing the path of this directory in the `GBG_DIR` environment variable.
+
+You now have a `god_bless_git` function declared which will populate GBG's variables each time you call it.
+For example, move to a non git repository folder (like `/tmp`) and run:
+
+```sh
+cd /tmp
+god_bless_git
+```
+
+At this point GBG's variables have been added to your environment.
+You can print the list of these variables with the following command:
+
+```sh
+set | grep -aE '^gbg_'
+```
+
+Here is the sample output:
+
+```
+gbg_head_branch=''
+gbg_head_hash=''
+gbg_head_is_detached=''
+gbg_head_is_on_tag=''
+gbg_head_tag=''
+gbg_index_additions_num=''
+gbg_index_deletions_num=''
+gbg_index_has_additions=''
+gbg_index_has_deletions=''
+gbg_index_has_modifications=''
+gbg_index_has_moves=''
+gbg_index_modifications_num=''
+gbg_index_moves_num=''
+gbg_is_a_git_repo=false
+gbg_repo_git_dir=''
+gbg_repo_has_stashes=''
+gbg_repo_just_init=''
+gbg_repo_stashes_num=''
+gbg_repo_top_level=''
+gbg_upstream_commits_ahead_num=''
+gbg_upstream_commits_behind_num=''
+gbg_upstream_has_commits_ahead=''
+gbg_upstream_has_commits_behind=''
+gbg_upstream_has_diverged=''
+gbg_upstream_has_upstream=''
+gbg_upstream_name=''
+gbg_workspace_deletions_num=''
+gbg_workspace_has_deletions=''
+gbg_workspace_has_ignored=''
+gbg_workspace_has_modifications=''
+gbg_workspace_has_untracked=''
+gbg_workspace_ignored_num=''
+gbg_workspace_modifications_num=''
+gbg_workspace_untracked_num=''
+```
+
+Then move back to the `god_bless_git` folder and run again the previous commands:
+
+```sh
+cd god_bless_git
+god_bless_git
+set | grep -aE '^gbg_'
+```
+
+The GBG's variables have been updated, and here is an example output (which can be different from yours):
+
+```
+gbg_head_branch=master
+gbg_head_hash=5543d924a41f33b045b5317291d3df0e4b76eee0
+gbg_head_is_detached=false
+gbg_head_is_on_tag=false
+gbg_head_tag=''
+gbg_index_additions_num=0
+gbg_index_deletions_num=0
+gbg_index_has_additions=false
+gbg_index_has_deletions=false
+gbg_index_has_modifications=false
+gbg_index_has_moves=false
+gbg_index_modifications_num=0
+gbg_index_moves_num=0
+gbg_is_a_git_repo=true
+gbg_repo_git_dir=/home/jovyan/god-bless-git/.git
+gbg_repo_has_stashes=false
+gbg_repo_just_init=false
+gbg_repo_stashes_num=0
+gbg_repo_top_level=/home/jovyan/god-bless-git
+gbg_upstream_commits_ahead_num=0
+gbg_upstream_commits_behind_num=0
+gbg_upstream_has_commits_ahead=false
+gbg_upstream_has_commits_behind=false
+gbg_upstream_has_diverged=false
+gbg_upstream_has_upstream=true
+gbg_upstream_name=origin/master
+gbg_workspace_deletions_num=0
+gbg_workspace_has_deletions=false
+gbg_workspace_has_ignored=true
+gbg_workspace_has_modifications=false
+gbg_workspace_has_untracked=true
+gbg_workspace_ignored_num=2
+gbg_workspace_modifications_num=0
+gbg_workspace_untracked_num=1
+```
+
+This list of variables can also be acquired by [invoking][] the script directly.
+
+#### <a name="invoking"></a>Invoking
+
+If you want to get Git informations just once, you can invoke GBG as any other standard commands.
+
+Execute the init script from your shell:
+
+```sh
+./god-bless-git/god_bless_git.sh
+```
+
+Even better, if the `god-bless-git` appears in your PATH variable (or you linked the init script in any PATH registered folder), you can just call the script without any prefix:
+
+```sh
+god_bless_git.sh
+```
+
+This will display the list of GBG's variables, that is to say all the lines starting with `gbg_` in the `set` command output, as presented in the [sourcing][] examples.
 
 ## Built With
 
@@ -231,6 +271,8 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 [deployment]: #deployment
 [prerequisites]: #prerequisites
+[sourcing]: #sourcing
+[invoking]: #invoking
 
 [bashate]: https://github.com/openstack-dev/bashate
 [git]: https://git-scm.com/downloads

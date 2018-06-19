@@ -1,11 +1,10 @@
 #! /usr/bin/env sh
 
-. "${GBG_DIR}/tests/util/setups.sh"
-. "${GBG_DIR}/tests/util/utils.sh"
+. "./tests/util/setups.sh"
 
 test_nulls_in_non_repo() {
     _make_it_non_repo
-    gbg_git_info
+    god_bless_git
 
     assertNull \
         "has_upstream" \
@@ -31,7 +30,7 @@ test_nulls_in_non_repo() {
 }
 
 test_not_has_upstream() {
-    gbg_git_info
+    god_bless_git
 
     assertEquals "false" "${gbg_upstream_has_upstream}"
     assertNull \
@@ -43,18 +42,18 @@ test_has_upstream() {
     _make_history 1
     _make_upstream
 
-    gbg_git_info
+    god_bless_git
     assertEquals "true" "${gbg_upstream_has_upstream}"
     assertEquals "origin/master" "${gbg_upstream_name}"
 
     _git remote rename origin o1
-    gbg_git_info
+    god_bless_git
     assertEquals "true" "${gbg_upstream_has_upstream}"
     assertEquals "o1/master" "${gbg_upstream_name}"
 }
 
 test_null_commits_without_remote() {
-    gbg_git_info
+    god_bless_git
 
     assertNull \
         "upstream_commits_ahead_num" \
@@ -77,7 +76,7 @@ test_no_commits() {
     _make_history 1
     _make_upstream
 
-    gbg_git_info
+    god_bless_git
     assertEquals "false" "${gbg_upstream_has_commits_ahead}"
     assertEquals 0 "${gbg_upstream_commits_ahead_num}"
     assertEquals "false" "${gbg_upstream_has_commits_behind}"
@@ -90,7 +89,7 @@ test_commits_ahead() {
     _make_upstream
 
     _make_history 1
-    gbg_git_info
+    god_bless_git
     assertEquals "true" "${gbg_upstream_has_commits_ahead}"
     assertEquals 1 "${gbg_upstream_commits_ahead_num}"
     assertEquals "false" "${gbg_upstream_has_commits_behind}"
@@ -98,7 +97,7 @@ test_commits_ahead() {
     assertEquals "false" "${gbg_upstream_has_diverged}"
 
     _make_history 1
-    gbg_git_info
+    god_bless_git
     assertEquals "true" "${gbg_upstream_has_commits_ahead}"
     assertEquals 2 "${gbg_upstream_commits_ahead_num}"
 }
@@ -108,7 +107,7 @@ test_commits_behind() {
     _make_upstream
 
     _git reset HEAD~
-    gbg_git_info
+    god_bless_git
     assertEquals "false" "${gbg_upstream_has_commits_ahead}"
     assertEquals 0 "${gbg_upstream_commits_ahead_num}"
     assertEquals "true" "${gbg_upstream_has_commits_behind}"
@@ -116,7 +115,7 @@ test_commits_behind() {
     assertEquals "false" "${gbg_upstream_has_diverged}"
 
     _git reset HEAD~
-    gbg_git_info
+    god_bless_git
     assertEquals "true" "${gbg_upstream_has_commits_behind}"
     assertEquals 2 "${gbg_upstream_commits_behind_num}"
 }
@@ -127,7 +126,7 @@ test_commits_diverged() {
 
     _git reset --hard HEAD~
     _make_history 1
-    gbg_git_info
+    god_bless_git
     assertEquals "true" "${gbg_upstream_has_commits_ahead}"
     assertEquals 1 "${gbg_upstream_commits_ahead_num}"
     assertEquals "true" "${gbg_upstream_has_commits_behind}"
@@ -136,7 +135,7 @@ test_commits_diverged() {
 
     _git reset --hard HEAD~2
     _make_history 2
-    gbg_git_info
+    god_bless_git
     assertEquals "true" "${gbg_upstream_has_commits_ahead}"
     assertEquals 2 "${gbg_upstream_commits_ahead_num}"
     assertEquals "true" "${gbg_upstream_has_commits_behind}"
@@ -144,5 +143,5 @@ test_commits_diverged() {
     assertEquals "true" "${gbg_upstream_has_diverged}"
 }
 
-. "${GBG_DIR}/tests/shunit2/shunit2"
+. "./tests/shunit2/shunit2"
 
