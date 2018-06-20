@@ -41,5 +41,6 @@ test_gbg_reset_when_not_enabled() {
         0 "${num_gbg_variables}"
 }
 
+SHUNIT_PARENT=$0
 . "./tests/shunit2/shunit2"
 

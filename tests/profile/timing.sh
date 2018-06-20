@@ -1,10 +1,6 @@
-#! /usr/sh
+#! /usr/bin/env sh
 
 . "./tests/util/setups.sh"
-
-_setup_profiling() {
-    echo "${PROFILE_DIR}"
-}
 
 _profile() {
     PROFILE_DIR="$(mktemp -d)"
@@ -151,4 +147,5 @@ test_long_profile_heavy_repo() {
             bc)"
 }
 
+SHUNIT_PARENT=$0
 . "./tests/shunit2/shunit2"

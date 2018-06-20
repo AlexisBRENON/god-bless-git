@@ -115,5 +115,6 @@ test_head_detached_after_checkout() {
     assertEquals "true" "${gbg_head_is_detached}"
 }
 
+SHUNIT_PARENT=$0
 . "./tests/shunit2/shunit2"
 
