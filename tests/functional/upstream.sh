@@ -143,5 +143,6 @@ test_commits_diverged() {
     assertEquals "true" "${gbg_upstream_has_diverged}"
 }
 
+SHUNIT_PARENT=$0
 . "./tests/shunit2/shunit2"
 

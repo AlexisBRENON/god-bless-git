@@ -122,5 +122,6 @@ test_num_stashes() {
     assertEquals 1 "${gbg_repo_stashes_num:-}"
 }
 
+SHUNIT_PARENT=$0
 . "./tests/shunit2/shunit2"
 

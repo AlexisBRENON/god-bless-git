@@ -108,5 +108,6 @@ test_has_ignored_and_num() {
     assertEquals 2 "${gbg_workspace_ignored_num}"
 }
 
+SHUNIT_PARENT=$0
 . "./tests/shunit2/shunit2"
 

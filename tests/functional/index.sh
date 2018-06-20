@@ -111,5 +111,6 @@ test_has_additions_and_num() {
     assertEquals 2 "${gbg_index_additions_num}"
 }
 
+SHUNIT_PARENT=$0
 . "./tests/shunit2/shunit2"
 

@@ -60,7 +60,9 @@ _make_history() {
     # A tag <branch_name>_init is added of the first commit of each branch.
     # This finally checkout master branch
     _make_commits "$1" "master"
-    shift
+    if [ "$#" -gt 0 ]; then
+        shift
+    fi
 
     branch_num=1
     for num_commits in "$@"; do

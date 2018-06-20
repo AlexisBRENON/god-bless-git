@@ -1,5 +1,7 @@
 #! /usr/bin/env make
 
+TEST_SHELL := sh
+
 FUNCTIONAL_TESTS := tests/functional/enable.sh \
 	tests/functional/repo.sh \
 	tests/functional/workspace.sh \
@@ -8,19 +10,19 @@ FUNCTIONAL_TESTS := tests/functional/enable.sh \
 	tests/functional/upstream.sh
 PROFILE_TESTS := tests/profile/timing.sh
 
-tests: functional-tests profile lint
+tests: functional-tests profile
 
 functional-tests: $(FUNCTIONAL_TESTS)
 
 .PHONY: $(FUNCTIONAL_TESTS)
 $(FUNCTIONAL_TESTS): tests/shunit2
-	$(SHELL) $@
+	$(TEST_SHELL) -- $@
 	
 profile: $(PROFILE_TESTS)
 
 .PHONY: $(PROFILE_TESTS)
 $(PROFILE_TESTS): tests/shunit2
-	$(SHELL) $@
+	$(TEST_SHELL) -- $@
 
 tests/shunit2:
 	git clone https://github.com/kward/shunit2.git tests/shunit2
