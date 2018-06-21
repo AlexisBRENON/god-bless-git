@@ -2,6 +2,12 @@
 
 A POSIX compatible script to extract some informations about a git repository.
 
+Status:
+[![Build Status](https://travis-ci.org/AlexisBRENON/god-bless-git.svg?branch=master)](https://travis-ci.org/AlexisBRENON/god-bless-git)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/AlexisBRENON/god-bless-git/graphs/commit-activity)
+[![GitHub release](https://img.shields.io/github/release/AlexisBRENON/god-bless-git.svg)](https://GitHub.com/AlexisBRENON/god-bless-git/releases/)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+
 God Bless Git (GBG) is a shell tool which can extract repository informations in a
 simple and readable format. Thus, you can know:
 
