@@ -75,6 +75,13 @@ test_head_branch_on_branches() {
     assertEquals "b1" "${gbg_head_branch}"
 }
 
+test_head_branch_on_detached() {
+    _make_history 10
+    _git checkout HEAD~3
+    god_bless_git
+    assertEquals "HEAD" "${gbg_head_branch}"
+}
+
 test_head_tag_in_init() {
     god_bless_git
     assertEquals "false" "${gbg_head_is_on_tag}"
