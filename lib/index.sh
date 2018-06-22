@@ -2,10 +2,10 @@
 
 _gbg_get_index_status() {
     if [ "${gbg_is_a_git_repo:-}" = "true" ]; then
-        lgbg_git_status="$(git status --porcelain 2> /dev/null)"
+        lgbg_git_status="$(git status --porcelain 2> /dev/null || true)"
         lgbg_modifications_num=$(\
             echo "${lgbg_git_status}" | \
-            grep -Ece '^M')
+            grep -Ece '^M' || true)
         lgbg_has_modifications=$( \
             [ "${lgbg_modifications_num}" -gt 0 ] && \
             echo "true" || \
@@ -13,7 +13,7 @@ _gbg_get_index_status() {
 
         lgbg_moves_num=$(\
             echo "${lgbg_git_status}" | \
-            grep -Ece '^R')
+            grep -Ece '^R' || true)
         lgbg_has_moves=$( \
             [ "${lgbg_moves_num}" -gt 0 ] && \
             echo "true" || \
@@ -21,7 +21,7 @@ _gbg_get_index_status() {
 
         lgbg_deletions_num=$(\
             echo "${lgbg_git_status}" | \
-            grep -Ece '^D')
+            grep -Ece '^D' || true)
         lgbg_has_deletions=$( \
             [ "${lgbg_deletions_num}" -gt 0 ] && \
             echo "true" || \
@@ -29,7 +29,7 @@ _gbg_get_index_status() {
 
         lgbg_additions_num=$(\
             echo "${lgbg_git_status}" | \
-            grep -Ece '^A')
+            grep -Ece '^A' || true)
         lgbg_has_additions=$( \
             [ "${lgbg_additions_num}" -gt 0 ] && \
             echo "true" || \

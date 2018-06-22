@@ -2,17 +2,17 @@
 
 _gbg_get_workspace_status() {
     if [ "${gbg_is_a_git_repo:-}" = "true" ]; then
-        lgbg_git_status="$(git status --porcelain --ignored 2> /dev/null)"
+        lgbg_git_status="$(git status --porcelain --ignored 2> /dev/null || true)"
 
         lgbg_modifications_num=$(\
             echo "${lgbg_git_status}" | \
-            grep -Ece '^.M')
+            grep -Ece '^.M' || true)
         lgbg_has_modifications=$( \
             [ "${lgbg_modifications_num}" -gt 0 ] && \
             echo "true" || \
             echo "false" )
 
-        lgbg_deletions_num=$(echo "${lgbg_git_status}" | grep -Ece '^.D')
+        lgbg_deletions_num=$(echo "${lgbg_git_status}" | grep -Ece '^.D' || true)
         lgbg_has_deletions=$( \
             [ "${lgbg_deletions_num}" -gt 0 ] && \
             echo "true" || \
@@ -20,13 +20,13 @@ _gbg_get_workspace_status() {
 
         lgbg_untracked_num=$(\
             echo "${lgbg_git_status}" | \
-            grep -Ece '^\?\?')
+            grep -Ece '^\?\?' || true)
         lgbg_has_untracked=$( \
             [ "${lgbg_untracked_num}" -gt 0 ] && \
             echo "true" || \
             echo "false" )
 
-        lgbg_ignored_num=$(echo "${lgbg_git_status}" | grep -Ece '^!!')
+        lgbg_ignored_num=$(echo "${lgbg_git_status}" | grep -Ece '^!!' || true)
         lgbg_has_ignored=$( \
             [ "${lgbg_ignored_num}" -gt 0 ] && \
             echo "true" || \
