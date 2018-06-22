@@ -2,12 +2,12 @@
 
 _gbg_get_head_status() {
     if [ "${gbg_is_a_git_repo:-}" = "true" ]; then
-        lgbg_current_commit_hash="$(git rev-parse HEAD 2> /dev/null)"
-        lgbg_current_branch="$(git rev-parse --abbrev-ref HEAD 2> /dev/null)"
+        lgbg_current_commit_hash="$(git rev-parse HEAD 2> /dev/null || true)"
+        lgbg_current_branch="$(git rev-parse --abbrev-ref HEAD 2> /dev/null || true)"
         lgbg_tag_at_current_commit="$(\
             git describe --exact-match --tags \
             "${lgbg_current_commit_hash}"\
-            2> /dev/null)"
+            2> /dev/null || true)"
         lgbg_head_is_on_tag="$( \
             [ -n "${lgbg_tag_at_current_commit}" ] && \
             echo "true" || \

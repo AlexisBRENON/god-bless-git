@@ -12,10 +12,9 @@
 . "${GBG_DIR}/lib/upstream.sh"
 
 _gbg_git_info() {
-
     # Check that gbg is not disabled
-    lgbg_enabled="$(git config --get gbg.enabled)"
-    lgbg_disabled="$(git config --get gbg.disabled)"
+    lgbg_enabled="$(git config --get gbg.enabled || true)"
+    lgbg_disabled="$(git config --get gbg.disabled || true)"
     if [ "${lgbg_enabled}" = "false" ] || \
         [ "${lgbg_disabled}" = "true" ]; then
         # Unset previously defined gbg variables

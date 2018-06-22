@@ -4,7 +4,7 @@ _gbg_get_upstream_status() {
     if [ "${gbg_is_a_git_repo:-false}" = "true" ]; then
         lgbg_upstream="$(\
             git rev-parse --symbolic-full-name --abbrev-ref "@{upstream}" \
-            2> /dev/null)"
+            2> /dev/null || true)"
 
         if [ -n "${lgbg_upstream}" ] && \
             [ "${lgbg_upstream}" != "@{upstream}" ]; then
@@ -12,17 +12,17 @@ _gbg_get_upstream_status() {
             lgbg_commits_diff="$(\
                 git log --pretty=oneline --topo-order --left-right \
                 HEAD..."${lgbg_upstream}" \
-                2> /dev/null)"
+                2> /dev/null || true)"
             lgbg_commits_ahead="$(\
                 printf "%s" "${lgbg_commits_diff}" | \
-                grep -c "^<")"
+                grep -c "^<" || true)"
             lgbg_has_commits_ahead="$( \
                 [ "${lgbg_commits_ahead}" -gt 0 ] && \
                 echo "true" || \
                 echo "false" )"
             lgbg_commits_behind="$(\
                 printf "%s" "${lgbg_commits_diff}" | \
-                grep -c "^>")"
+                grep -c "^>" || true)"
             lgbg_has_commits_behind="$( \
                 [ "${lgbg_commits_behind}" -gt 0 ] && \
                 echo "true" || \

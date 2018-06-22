@@ -50,14 +50,22 @@ test_nulls_in_non_repo() {
 
 test_git_dir_at_root() {
     god_bless_git
-    assertEquals "${SHUNIT_TMPDIR}/.git" "${gbg_repo_git_dir}"
+    if [ "${gbg_repo_git_dir}" = "--absolute-git-dir" ]; then
+      echo "WARNING: God Bless Git requires git v2.13.0+"
+    else
+      assertEquals "${SHUNIT_TMPDIR}/.git" "${gbg_repo_git_dir}"
+    fi
 }
 
 test_git_dir_in_subdir() {
     _make_subdir
     cd sub1/sub11 || fail
     god_bless_git
-    assertEquals "${SHUNIT_TMPDIR}/.git" "${gbg_repo_git_dir}"
+    if [ "${gbg_repo_git_dir}" = "--absolute-git-dir" ]; then
+      echo "WARNING: God Bless Git requires git v2.13.0+"
+    else
+      assertEquals "${SHUNIT_TMPDIR}/.git" "${gbg_repo_git_dir}"
+    fi
 }
 
 test_git_top_level_at_root() {

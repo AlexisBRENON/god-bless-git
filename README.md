@@ -31,7 +31,7 @@ See [deployment][] for notes on how to deploy the project on a live system.
 
 God Bless Git as few prerequisites.
 
-First one is [git][] which is required.
+First one is [git][] which is required (in a version greater or equal than 2.13.0).
 You can install it with your distribution package manager (apt, yum, pacman, etc.) or compile it yourself (look [git website][git]).
 
 Then, GBG rely on POSIX compliant system utilities as `sed`, `grep`, `cut`, etc.

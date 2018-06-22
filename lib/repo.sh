@@ -16,7 +16,7 @@ _gbg_get_repo_status() {
         lgbg_number_of_logs="$(\
             git log --pretty=oneline \
             2> /dev/null | \
-            wc -l)"
+            wc -l || true)"
         lgbg_repo_just_init="$( \
             [ "${lgbg_number_of_logs}" -eq 0 ] && \
             echo "true" || \
@@ -25,7 +25,7 @@ _gbg_get_repo_status() {
         lgbg_number_of_stashes="$(\
             git stash list \
             2> /dev/null | \
-            wc -l)"
+            wc -l || true)"
         lgbg_has_stashes="$( \
             [ "${lgbg_number_of_stashes}" -gt 0 ] && \
             echo "true" || \
