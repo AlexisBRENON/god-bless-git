@@ -1,6 +1,6 @@
 #! /bin/sh
 
-_shell_state="$(set +o)"
+_shell_state="$(set +o | grep -v -e '+o')"
 set -eu
 
 get_absolute_dirname() {
@@ -74,6 +74,6 @@ unset lgbg_file
 unset lgbg_call
 
 set +eu
-eval ${_shell_state}
+eval "${_shell_state}"
 unset shell_state
 
