@@ -20,12 +20,16 @@ lgbg_call=${GBG_CALL:-}
 lgbg_file="./god_bless_git.sh"
 if [ -z "${lgbg_call}" ]; then # Try to guess call type (invokation vs. sourcing)
     if [ -n "${ZSH_VERSION:-}" ]; then # Z Shell
-        if [ "${ARGC:-}" -ge 1 ]; then
+        lgbg_eval_context="${ZSH_EVAL_CONTEXT:-}"
+        if [ \
+            "$(echo "${lgbg_eval_context}" | rev | cut -d: -f1 | rev)" = \
+            "file" ]; then
             lgbg_call="source"
         else
             lgbg_call="invoke"
         fi
         lgbg_file="$0"
+        unset lgbg_eval_context
     elif [ -n "${BASH_VERSION:-}" ]; then # Bash
         if [ "$(basename "${0:-}")" = "god_bless_git.sh" ]; then
             lgbg_call="invoke"
