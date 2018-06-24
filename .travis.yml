@@ -20,3 +20,7 @@ install:
 
 script:
   - make "TEST_SHELL=${SHELL}" tests
+
+after_failure:
+  - make "TEST_SHELL=${SHELL} -x" tests
+
