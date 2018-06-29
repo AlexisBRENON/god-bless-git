@@ -62,6 +62,18 @@
 
     Number of stashes in the working repository.
 
+  * `gbg_repo_has_conflicts`: boolean
+
+    **Introduction:** [0.0.11][]
+
+    Are there conflicting files in the repository?
+
+  * `gbg_repo_conflicts_num`: integer
+
+    **Introduction:** [0.0.11][]
+
+    Number of conflicting files in the repository.
+
 ## `HEAD` variables
 
   * `gbg_head_hash`: string

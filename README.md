@@ -5,7 +5,7 @@ A POSIX compatible script to extract some informations about a git repository.
 Status:
 [![Build Status](https://travis-ci.org/AlexisBRENON/god-bless-git.svg?branch=master)](https://travis-ci.org/AlexisBRENON/god-bless-git)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/AlexisBRENON/god-bless-git/graphs/commit-activity)
-[![GitHub release](https://img.shields.io/github/release/AlexisBRENON/god-bless-git.svg)](https://GitHub.com/AlexisBRENON/god-bless-git/releases/)
+[![GitHub tag](https://img.shields.io/github/tag/AlexisBRENON/god-bless-git.svg)](https://GitHub.com/AlexisBRENON/god-bless-git/tags/)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
 God Bless Git (GBG) is a shell tool which can extract repository informations in a
@@ -126,7 +126,7 @@ Or, for ZSH user
 **Note:** Depending on your shell (in particular, on classical `sh`), init script is not able to determine GBG root directory.
 It is possible to overcome this providing the path of this directory in the `GBG_DIR` environment variable.
 
-You now have a `god_bless_git` function declared which will populate GBG's variables each time you call it.
+You now have a `god_bless_git` function declared which will populate [GBG's variables][doc variables] each time you call it.
 For example, move to a non git repository folder (like `/tmp`) and run:
 
 ```sh
@@ -145,38 +145,9 @@ Here is the sample output:
 
 ```
 gbg_head_branch=''
-gbg_head_hash=''
-gbg_head_is_detached=''
-gbg_head_is_on_tag=''
-gbg_head_tag=''
-gbg_index_additions_num=''
-gbg_index_deletions_num=''
-gbg_index_has_additions=''
-gbg_index_has_deletions=''
-gbg_index_has_modifications=''
-gbg_index_has_moves=''
-gbg_index_modifications_num=''
-gbg_index_moves_num=''
+...
 gbg_is_a_git_repo=false
-gbg_repo_git_dir=''
-gbg_repo_has_stashes=''
-gbg_repo_just_init=''
-gbg_repo_stashes_num=''
-gbg_repo_top_level=''
-gbg_upstream_commits_ahead_num=''
-gbg_upstream_commits_behind_num=''
-gbg_upstream_has_commits_ahead=''
-gbg_upstream_has_commits_behind=''
-gbg_upstream_has_diverged=''
-gbg_upstream_has_upstream=''
-gbg_upstream_name=''
-gbg_workspace_deletions_num=''
-gbg_workspace_has_deletions=''
-gbg_workspace_has_ignored=''
-gbg_workspace_has_modifications=''
-gbg_workspace_has_untracked=''
-gbg_workspace_ignored_num=''
-gbg_workspace_modifications_num=''
+...
 gbg_workspace_untracked_num=''
 ```
 
@@ -192,41 +163,13 @@ The GBG's variables have been updated, and here is an example output (which can 
 
 ```
 gbg_head_branch=master
-gbg_head_hash=5543d924a41f33b045b5317291d3df0e4b76eee0
-gbg_head_is_detached=false
-gbg_head_is_on_tag=false
-gbg_head_tag=''
-gbg_index_additions_num=0
-gbg_index_deletions_num=0
-gbg_index_has_additions=false
-gbg_index_has_deletions=false
-gbg_index_has_modifications=false
-gbg_index_has_moves=false
-gbg_index_modifications_num=0
-gbg_index_moves_num=0
+...
 gbg_is_a_git_repo=true
-gbg_repo_git_dir=/home/jovyan/god-bless-git/.git
-gbg_repo_has_stashes=false
-gbg_repo_just_init=false
-gbg_repo_stashes_num=0
-gbg_repo_top_level=/home/jovyan/god-bless-git
-gbg_upstream_commits_ahead_num=0
-gbg_upstream_commits_behind_num=0
-gbg_upstream_has_commits_ahead=false
-gbg_upstream_has_commits_behind=false
-gbg_upstream_has_diverged=false
-gbg_upstream_has_upstream=true
-gbg_upstream_name=origin/master
-gbg_workspace_deletions_num=0
-gbg_workspace_has_deletions=false
-gbg_workspace_has_ignored=true
-gbg_workspace_has_modifications=false
-gbg_workspace_has_untracked=true
-gbg_workspace_ignored_num=2
-gbg_workspace_modifications_num=0
+...
 gbg_workspace_untracked_num=1
 ```
 
+The complete list of variables populated can be found on the [dedicated documentation page][doc variables].
 This list of variables can also be acquired by [invoking][] the script directly.
 
 #### <a name="invoking"></a>Invoking
@@ -245,7 +188,7 @@ Even better, if the `god-bless-git` appears in your PATH variable (or you linked
 god_bless_git.sh
 ```
 
-This will display the list of GBG's variables, that is to say all the lines starting with `gbg_` in the `set` command output, as presented in the [sourcing][] examples.
+This will display the [list of GBG's variables][doc variables], that is to say all the lines starting with `gbg_` in the `set` command output, as presented in the [sourcing][] examples.
 
 ## Built With
 
@@ -279,6 +222,8 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 [prerequisites]: #prerequisites
 [sourcing]: #sourcing
 [invoking]: #invoking
+
+[doc variables]: https://github.com/AlexisBRENON/god-bless-git/blob/master/doc/variables_list.md
 
 [bashate]: https://github.com/openstack-dev/bashate
 [git]: https://git-scm.com/downloads

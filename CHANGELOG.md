@@ -2,6 +2,10 @@
 
 See the [versioned list of fetched informations](https://github.com/AlexisBRENON/god-bless-git/blob/master/doc/variables_list.md).
 
+## 0.0.11
+
+  * Provide information about conflicts
+
 ## 0.0.10
 
  * Better handling of source vs invocation
