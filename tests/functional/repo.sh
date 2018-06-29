@@ -46,14 +46,21 @@ test_nulls_in_non_repo() {
     assertEquals \
         "has_stashes" \
         "" "${gbg_repo_has_stashes:-}"
+
+    assertNull \
+        "has_conflicts" \
+        "${gbg_repo_has_conflicts:-}"
+    assertNull \
+        "conflicts_num" \
+        "${gbg_repo_conflicts_num:-}"
 }
 
 test_git_dir_at_root() {
     god_bless_git
     if [ "${gbg_repo_git_dir}" = "--absolute-git-dir" ]; then
-      echo "WARNING: God Bless Git requires git v2.13.0+"
+        echo "WARNING: God Bless Git requires git v2.13.0+"
     else
-      assertEquals "${SHUNIT_TMPDIR}/.git" "${gbg_repo_git_dir}"
+        assertEquals "${SHUNIT_TMPDIR}/.git" "${gbg_repo_git_dir}"
     fi
 }
 
@@ -62,9 +69,9 @@ test_git_dir_in_subdir() {
     cd sub1/sub11 || fail
     god_bless_git
     if [ "${gbg_repo_git_dir}" = "--absolute-git-dir" ]; then
-      echo "WARNING: God Bless Git requires git v2.13.0+"
+        echo "WARNING: God Bless Git requires git v2.13.0+"
     else
-      assertEquals "${SHUNIT_TMPDIR}/.git" "${gbg_repo_git_dir}"
+        assertEquals "${SHUNIT_TMPDIR}/.git" "${gbg_repo_git_dir}"
     fi
 }
 
@@ -128,6 +135,39 @@ test_num_stashes() {
     git stash drop >> "${SHUNIT_CMDOUTFILE}"
     god_bless_git
     assertEquals 1 "${gbg_repo_stashes_num:-}"
+}
+
+test_no_conflicts_nominal() {
+    god_bless_git
+    assertEquals "Just init: has conflicts" \
+        "false" "${gbg_repo_has_conflicts}"
+    assertEquals "Just init: conflicts num" \
+        0 "${gbg_repo_conflicts_num}"
+
+    _make_history
+    god_bless_git
+    assertEquals "After commit: has conflicts" \
+        "false" "${gbg_repo_has_conflicts}"
+    assertEquals "After commit: conflicts num" \
+        0 "${gbg_repo_conflicts_num}"
+}
+
+test_conflicts() {
+    _make_history 1 2
+    echo "master conflict" > b1_f1
+    echo "master conflict" > b1_f2
+    _git add b1_f1 b1_f2
+    _git commit -m "Conflicting commit"
+    _git merge b1 master
+
+    _git status
+    _git status --porcelain
+
+    god_bless_git
+    assertEquals "has conflicts" \
+        "true" "${gbg_repo_has_conflicts}"
+    assertEquals "conflicts num" \
+        2 "${gbg_repo_conflicts_num}"
 }
 
 SHUNIT_PARENT=$0
