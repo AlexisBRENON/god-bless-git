@@ -53,6 +53,13 @@ test_nulls_in_non_repo() {
     assertNull \
         "conflicts_num" \
         "${gbg_repo_conflicts_num:-}"
+
+    assertNull \
+        "has_pending_action" \
+        "${gbg_repo_has_pending_action:-}"
+    assertNull \
+        "pending action type" \
+        "${gbg_repo_pending_action_type:-}"
 }
 
 test_git_dir_at_root() {
@@ -168,6 +175,66 @@ test_conflicts() {
         "true" "${gbg_repo_has_conflicts}"
     assertEquals "conflicts num" \
         2 "${gbg_repo_conflicts_num}"
+}
+
+test_no_pending_action_nominal() {
+    god_bless_git
+    assertEquals "Just init: has pending action" \
+        "false" "${gbg_repo_has_pending_action}"
+    assertNull "Just init: pending action" \
+        "${gbg_repo_pending_action_type}"
+
+    _make_history 10 10
+    god_bless_git
+    assertEquals "After commit: has pending action" \
+        "false" "${gbg_repo_has_pending_action}"
+    assertNull "After commit: pending action" \
+        "${gbg_repo_pending_action_type}"
+}
+
+test_pending_action() {
+    _make_history 5 5
+    _git merge --no-commit b1
+    god_bless_git
+    assertEquals "Merge: has action" \
+        "true" "${gbg_repo_has_pending_action}"
+    assertEquals "Merge: action type" \
+        "merge" "${gbg_repo_pending_action_type}"
+    _git merge --abort
+
+    _git bisect start
+    god_bless_git
+    assertEquals "Bisect: has action" \
+        "true" "${gbg_repo_has_pending_action}"
+    assertEquals "Bisect: action type" \
+        "bisect" "${gbg_repo_pending_action_type}"
+    _git bisect reset
+
+    echo "master conflict" > b1_f1
+    _git add b1_f1
+    _git commit -m "."
+    _git rebase master b1
+    god_bless_git
+    assertEquals "Rebase: has action" \
+        "true" "${gbg_repo_has_pending_action}"
+    assertEquals "Rebase: action type" \
+        "rebase" "${gbg_repo_pending_action_type}"
+    _git rebase --abort
+
+    _git cherry-pick b1_init
+    god_bless_git
+    assertEquals "Cherry-pick: has action" \
+        "true" "${gbg_repo_has_pending_action}"
+    assertEquals "Cherry-pick: action type" \
+        "cherry-pick" "${gbg_repo_pending_action_type}"
+    _git cherry-pick --abort
+
+    # TODO(AlexisBRENON)
+    # Find use cases for other values:
+    #   * rebase:interactive
+    #   * rebase:merge
+    #   * apply (patch apply)
+    #   * apply:rebase (???)
 }
 
 SHUNIT_PARENT=$0
