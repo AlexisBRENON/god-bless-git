@@ -1,5 +1,6 @@
 # List of the populated variables
 
+[0.0.12]: https://github.com/AlexisBRENON/god-bless-git/tree/0.0.12-rc1
 [0.0.11]: https://github.com/AlexisBRENON/god-bless-git/releases/tag/v0.0.11
 [0.0.10]: https://github.com/AlexisBRENON/god-bless-git/releases/tag/v0.0.10
 [0.0.9]: https://github.com/AlexisBRENON/god-bless-git/releases/tag/v0.0.9
@@ -86,6 +87,23 @@
     **Introduction:** [0.0.11][]
 
     Number of conflicting files in the repository.
+
+  * <span id="gbg_repo_has_pending_action">`gbg_repo_has_pending_action`</span>: boolean
+
+    **Introduction:** [0.0.12][]
+
+    Are there a pending action on the current repository.
+
+  * <span id="gbg_repo_pending_action_type">`gbg_repo_pending_action_type`</span>: string
+
+    **Introduction:** [0.0.12][]
+
+    String representing the current pending action:
+      * `rebase[:(interactive|merge)]`
+      * `apply[:rebase]`
+      * `merge`
+      * `cherry-pick`
+      * `bisect`
 
 ## `HEAD` variables
 
@@ -290,6 +308,7 @@
   * [has_modifications (gbg_index)](#gbg_index_has_modifications)
   * [has_modifications (gbg_workspace)](#gbg_workspace_has_modifications)
   * [has_moves (gbg_index)](#gbg_index_has_moves)
+  * [has_pending_action (gbg_repo)](#gbg_repo_has_pending_action)
   * [has_stashes (gbg_repo)](#gbg_repo_has_stashes)
   * [has_untracked (gbg_workspace)](#gbg_workspace_has_untracked)
   * [has_upstream (gbg_upstream)](#gbg_upstream_has_upstream)
@@ -307,6 +326,8 @@
   * [moves_num (gbg_index)](#gbg_index_moves_num)
   * **\_\_ N \_\_**
   * [name (gbg_upstream)](#gbg_upstream_name)
+  * \_\_ P \_\_
+  * [pending_action_type (gbg_repo)](#gbg_repo_pending_action_type)
   * **\_\_ S \_\_**
   * [stashes_num (gbg_repo)](#gbg_repo_stashes_num)
   * **\_\_ T \_\_**

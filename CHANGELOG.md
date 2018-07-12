@@ -1,6 +1,10 @@
 # God Bless Git -- Changelog
 
-See the [versioned list of fetched informations](https://github.com/AlexisBRENON/god-bless-git/blob/master/doc/variables_list.md).
+See the [versioned list of fetched informations](./doc/variables_list.md).
+
+## 0.0.12
+
+  * Provide information about pending action
 
 ## 0.0.11
 
@@ -10,7 +14,7 @@ See the [versioned list of fetched informations](https://github.com/AlexisBRENON
 
  * Better handling of source vs invocation
  * Export GBG_VERSION variable
- * Add documentation on the [fetched informations](https://github.com/AlexisBRENON/god-bless-git/blob/master/doc/variables_list.md)
+ * Add documentation on the [fetched informations](./doc/variables_list.md)
 
 ## 0.0.9
 

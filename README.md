@@ -223,7 +223,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 [sourcing]: #sourcing
 [invoking]: #invoking
 
-[doc variables]: https://github.com/AlexisBRENON/god-bless-git/blob/master/doc/variables_list.md
+[doc variables]: ./doc/variables_list.md
 
 [bashate]: https://github.com/openstack-dev/bashate
 [git]: https://git-scm.com/downloads
