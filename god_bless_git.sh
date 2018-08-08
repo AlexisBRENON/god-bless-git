@@ -68,7 +68,7 @@ else
         }
         export god_bless_git
         export GBG_DIR
-        export GBG_VERSION="0.0.10"
+        export GBG_VERSION="0.0.12"
     else
         echo "Unable to determine invokation type." >&2
     fi
