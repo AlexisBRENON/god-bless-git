@@ -41,10 +41,16 @@ _gbg_get_repo_status() {
             echo "true" || \
             echo "false" )"
 
+        lgbg_repo_name="$( \
+          git config --get remote.gerrit.projectname)"
+        if [ -z "${lgbg_repo_name}" ]; then
+          lgbg_repo_name="$(basename "${lgbg_git_top_level}")"
+        fi
     fi
 
     gbg_repo_git_dir="${lgbg_git_dir:-}"
     gbg_repo_top_level="${lgbg_git_top_level:-}"
+    gbg_repo_name="${lgbg_repo_name:-}"
     gbg_repo_just_init="${lgbg_repo_just_init:-}"
     gbg_repo_stashes_num="${lgbg_number_of_stashes:-}"
     gbg_repo_has_stashes="${lgbg_has_stashes:-}"
@@ -54,6 +60,7 @@ _gbg_get_repo_status() {
     export gbg_is_a_git_repo
     export gbg_repo_git_dir
     export gbg_repo_top_level
+    export gbg_repo_name
     export gbg_repo_just_init
     export gbg_repo_stashes_num
     export gbg_repo_has_stashes
